@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shinchan ❤️ Loves Zara</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Great+Vibes&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/jpg" href="/7410332f759b2df41207f769e1e59dea.jpg">
+
+<style>
+
+/* ================= BACKGROUND ================= */
+body{
+  margin:0;
+  font-family:'Playfair Display',serif;
+  overflow-x:hidden;
+  
+  background:#f7e7e9; /* Soft static background */
+}
+
+@keyframes gradientMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* ================= SPARKLE CURSOR ================= */
+.sparkle{
+  position:fixed;
+  pointer-events:none;
+  font-size:14px;
+  animation:fade 1s linear forwards;
+  z-index:9999;
+}
+@keyframes fade{
+  to{opacity:0;transform:translateY(-20px);}
+}
+
+/* ================= FLOATING HEARTS ================= */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:18px;
+  color:rgba(255,255,255,0.6);
+  animation:floatUp linear forwards;
+  z-index:0;
+}
+@keyframes floatUp{
+  to{transform:translateY(-110vh);opacity:0;}
+}
+
+/* ================= HERO ================= */
+.hero{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background: linear-gradient(to bottom,#f7e7e9,#f3d7dc);
+}
+
+@keyframes fadeInHero{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.smallText{
+  font-size:13px;
+  letter-spacing:3px;
+}
+.mainTitle{
+  font-family:'Great Vibes',cursive;
+  font-size:80px;
+  text-shadow:0 0 25px rgba(255,255,255,0.7);
+}
+.quote{
+  font-size:15px;
+  font-style:italic;
+  margin-bottom:30px;
+}
+.loveBtn{
+  background:white;
+  color:#e60073;
+  padding:14px 40px;
+  border:none;
+  border-radius:30px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.3s;
+}
+.loveBtn:hover{
+  transform:scale(1.08);
+}
+
+/* ================= ENVELOPE ================= */
+#envelopeSection{
+  display:none;
+  background: linear-gradient(-45deg,#ff9ecf,#ffc3e6,#ffe6f2,#ffd1ec);
+  background-size: 400% 400%;
+  animation: gradientMove 18s ease infinite;
+  min-height:100vh;
+}
+
+
+#loader{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.envelope{
+  width:220px;
+  height:140px;
+  background:#ff4da6;
+  border-radius:10px;
+  position:relative;
+  box-shadow:0 0 50px rgba(255,0,128,0.6);
+}
+.flap{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:#ff1a8c;
+  clip-path: polygon(0 0,50% 60%,100% 0);
+  transform-origin:top;
+  animation:openFlap 2.5s ease forwards;
+}
+@keyframes openFlap{
+  to{transform:rotateX(-180deg);}
+}
+
+/* ================= OLD PAPER LETTER ================= */
+.letter{
+  width:90%;
+  max-width:850px;
+  margin:50px auto;
+  padding:50px;
+  background:#fff8e7;
+  border-radius:20px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.2);
+  position:relative;
+  animation:fadeLetter 1.5s ease;
+}
+
+@keyframes fadeLetter{
+  from{opacity:0;transform:scale(0.9);}
+  to{opacity:1;transform:scale(1);}
+}
+
+/* Candle Glow Effect */
+.letter::before{
+  content:"";
+  position:absolute;
+  top:-40px;
+  left:50%;
+  transform:translateX(-50%);
+  width:120px;
+  height:60px;
+  background:radial-gradient(circle, rgba(255,200,150,0.6), transparent);
+  filter:blur(20px);
+}
+
+/* Title */
+.letterTitle{
+  text-align:center;
+  font-size:32px;
+  margin-bottom:25px;
+  color:#b30059;
+}
+
+/* Handwriting */
+.line{
+  margin:14px 0;
+  line-height:1.8;
+  font-size:19px;
+  font-family:'Dancing Script',cursive;
+  color:#4d0026;
+}
+
+/* ================= ROSE PETALS ================= */
+.petal{
+  position:fixed;
+  top:-20px;
+  font-size:22px;
+  animation:fall linear forwards;
+  z-index:1;
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* ================= BUTTONS ================= */
+#skipBtn,#memoriesBtn{
+  position:fixed;
+  bottom:25px;
+  padding:12px 22px;
+  border:none;
+  border-radius:25px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+#skipBtn{ left:25px;background:#ff66b3; }
+#memoriesBtn{ right:25px;background:#e60073; }
+
+/* ================= POPUP ================= */
+#popup{
+  position:fixed;
+  inset:0;
+  background:rgba(255,182,193,0.95);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.popupBox{
+  background:white;
+  width:80%;
+  max-width:800px;   /* Tablet size */
+  height:75vh;       /* Taller like tablet */
+  padding:40px;
+  border-radius:25px;
+  text-align:center;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 30px 80px rgba(0,0,0,0.3);
+}
+
+
+.popupBox img{
+  width:70%;
+  max-height:55vh;
+  object-fit:cover;
+  border-radius:20px;
+  margin:20px 0;
+}
+
+#closePopup{
+  float:right;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+#carouselTitle{
+  font-size:28px;
+  font-family:'Great Vibes', cursive;
+  color:#e60073;
+  margin-bottom:10px;
+}
+
+.carouselButtons{
+  width:60%;
+  display:flex;
+  justify-content:space-between;
+  margin-top:15px;
+}
+
+.carouselButtons button{
+  background:#ff4da6;
+  border:none;
+  padding:12px 30px;
+  color:white;
+  font-size:16px;
+  border-radius:30px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.carouselButtons button:hover{
+  transform:scale(1.1);
+}
+
+
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="smallText">A Special Message For</div>
+  <h1 class="mainTitle">My Love</h1>
+  <div class="quote">"Every love story is beautiful, but ours is my favorite"</div>
+  <button class="loveBtn" onclick="openLetter()">♡ Open Your Love Letter</button>
+</div>
+
+<!-- ENVELOPE -->
+<div id="envelopeSection">
+  <div id="loader">
+    <div class="envelope"><div class="flap"></div></div>
+  </div>
+
+  <div class="letter" id="letterBox" style="display:none;">
+    <h1 class="letterTitle">Shinchan ❤️ Loves Zara</h1>
+    <div id="letterText"></div>
+  </div>
+
+  <button id="skipBtn">Skip 💫</button>
+  <button id="memoriesBtn">❤️ Memories</button>
+</div>
+
+<!-- POPUP -->
+<div id="popup">
+  <div class="popupBox">
+  <span id="closePopup">✖</span>
+
+  <h2 id="carouselTitle"></h2>
+
+  <img id="carouselImage" src="" />
+
+  <div class="carouselButtons">
+    <button id="prevBtn">◀</button>
+    <button id="nextBtn">▶</button>
+  </div>
+</div>
+
+</div>
+
+
+<audio id="music" loop>
+<source src="/Feel-My-Love.mp3">
+</audio>
+
+<script>
+
+/* Sparkle Cursor */
+document.addEventListener("mousemove",e=>{
+  const s=document.createElement("div");
+  s.className="sparkle";
+  s.innerHTML="✨";
+  s.style.left=e.pageX+"px";
+  s.style.top=e.pageY+"px";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),1000);
+});
+
+/* Floating Hearts */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="♡";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(Math.random()*8+6)+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),12000);
+},900);
+
+/* Open Letter */
+function openLetter(){
+  hero.style.display="none";
+  envelopeSection.style.display="block";
+  music.volume=0.3;
+  music.play().catch(()=>{});
+  setTimeout(()=>{
+    loader.style.display="none";
+    letterBox.style.display="block";
+    type();
+    petals();
+  },3000);
+}
+
+/* Rose Petals */
+function petals(){
+  setInterval(()=>{
+    const p=document.createElement("div");
+    p.className="petal";
+    p.innerHTML="🌹";
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=(Math.random()*10+8)+"s";
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),18000);
+  },800);
+}
+
+/* Typing + Auto Scroll */
+const lines = [
+"Unga kitta onnu solanum, romba naala thonittu irundhu, aana eppadi solradhu nu theriyala.",
+"Unga kitta solanum nu try pannaren.",
+"Aana edha ungala pathi solanum nu nenacha… ok paravilla.",
+"",
+"Ungaluku nyabagam irukka theriyala.",
+"First time meet pannum bodhu enna sonnenga na —",
+"“Unga kitta naan IG kekum bodhu edha solringa, vidhi onnu irundha thirumba meet pannuvom” nu.",
+"",
+"Namba first time meet pannum pothey neenga kiss koduthinga.",
+"Evalo romantic-aa irundhuchu.",
+"",
+"Apram one week later katchi thirumba meet pannom.",
+"Anaiku enna naaluna Christmas kazhinji second day.",
+"Correct-aa sollanum na 27/12.",
+"Ennaku appo Christmas mudinju gift kedaikkura maadhiri irundhuchu.",
+"",
+"Lip balm eduthu unga cheek-la heart potu romba cute-aa irundhinga.",
+"Rendu perum cringe ellam pannitu irundhom.",
+"Heart shape-la screen kaatitu irundhom.",
+"",
+"I was kinda sad all day.",
+"But you kinda made the day good.",
+"I felt something I never experienced before.",
+"It was unexpressable.",
+"I can’t forget that day.",
+"",
+"Neenga naan single nu sollitu, apram adutha naal unga cousin kooda story potinga.",
+"Naan appo namba kitta summa pesitu irundhaanga pola nu feel panniten.",
+"",
+"Anaiku neenga “Feel My Love” song paaduringa.",
+"Andha naal la unga post, highlights ellam paathu suthitu irundhen.",
+"Unga songs ellam eduthu ennoda favourites-la add panniten.",
+"Mudhal muraiyaa oru ponnu kaga notes podren – Feel My Love.",
+"",
+"New Year anaiku thirumba meet pannom.",
+"First time Snapchat install panninen.",
+"Install panna maatten” nu sonna naan than.",
+"",
+"First time oru ponnu kitta chat pannuren.",
+"First GM message varumbodhu kaathula parakkuren.",
+"GN varala na silence romba pesum.",
+"",
+"Neenga periods pain nu sonnapo enna solradhu nu theriyala.",
+"ChatGPT kooda ketten.",
+"I was like – she trusts me.",
+"",
+"Pongal shopping, calls, video call…",
+"Distance irundhaalum connection strong-aa irundhuchu.",
+"",
+"Neenga saree pic anuppina naal…",
+"Andha naal naan vizhundhuten.",
+"",
+"Ennaku vela kedaichapo first ungakitta sollanum nu thonuchu.",
+"Ungaloda ‘All the best’ romba meaning-aa irundhuchu.",
+"",
+"Interview fail aana kooda neenga sonninga — next time paathukalam.",
+"",
+"You are an angel who comes into life when I don’t pray for you.",
+"",
+"Ungala paakuradhukku munnaadi varaikkum enna enakke pidikkala.",
+"But when I am with you, I like me.",
+"",
+"Naan oru fuse bulb.",
+"Ennaku ungala enna pidikkum nu exact-aa solla theriyala except…",
+"",
+"Unga fav song – Lolita, Manipayya.",
+"Thirumba thirumba kekkura songs – Velicha Poove, Pirai Thedum, Anbe Vaa.",
+"Unga fav movie – Bombay.",
+"Unga watchlist – Padaiyappa.",
+"",
+"After fighting neenga azhumbodhu romba cute-aa iruppinga.",
+"Stress time-la face pack poduvinga.",
+"Lip balm always.",
+"Nails always glossy.",
+"",
+"Neenga cage illaama parakka aasai padra paravai maadhiri.",
+"Neenga dance pidikkum.",
+"Wildlife photographer aaganum nu aasai.",
+"",
+"Ungala pathi ellam therinjukkanum nu ennaku romba aasai.",
+"Ungalukku pidichadha unga kitta ketu tharanum nu aasai.",
+"",
+"I want to talk with you.",
+"I want to fight with you.",
+"And fight for you.",
+"And never let us go.",
+"",
+"Suppose 100 peru ungala love panninaalum naan oruthan.",
+"Suppose 10 peru naalum naan oruthan.",
+"",
+"Suppose yaarum ungala love pannala na…",
+"I was dead."
+];
+
+
+let li=0,ci=0,p=null,skip=false;
+const letter=document.getElementById("letterText");
+const box=document.getElementById("letterBox");
+
+function type(){
+  if(skip){
+    letter.innerHTML = lines.map(l=>`<p class='line'>${l}</p>`).join("");
+    
+    // Scroll whole page to bottom
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth"
+    });
+    return;
+  }
+
+  if(li >= lines.length) return;
+
+  if(!p){
+    p = document.createElement("p");
+    p.className = "line";
+    letter.appendChild(p);
+  }
+
+  if(ci < lines[li].length){
+    p.textContent += lines[li][ci++];
+
+    // Scroll entire page smoothly
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth"
+    });
+
+    setTimeout(type, 35);
+  }else{
+    p = null;
+    ci = 0;
+    li++;
+    setTimeout(type, 600);
+  }
+}
+
+skipBtn.onclick=()=>skip=true;
+memoriesBtn.onclick=()=>popup.style.display="flex";
+closePopup.onclick=()=>popup.style.display="none";
+const memories = [
+  { src: "Images/crying.png", title: "Crying 🥺" },
+  { src: "Images/feeding.png", title: "Feeding Moment 🍚" },
+  { src: "Images/hair adjustment.png", title: "Adjusting Hair 💇‍♀️" },
+  { src: "Images/hearing.png", title: "With Silver Earrings ✨" },
+  { src: "Images/heart image.png", title: "Heart Mood 💖" },
+  { src: "Images/heart on cheek.png", title: "Heart on Cheek ❤️" },
+  { src: "Images/hip dance.png", title: "Hip Dance 💃" },
+  { src: "Images/hot.png", title: "Hot Look 🔥" },
+  { src: "Images/looking.png", title: "Looking Cute 👀" },
+  { src: "Images/mirror selfie.png", title: "Mirror Selfie 📸" },
+  { src: "Images/nail polish.png", title: "Nail Polish Time 💅" },
+  { src: "Images/pink saree.png", title: "Pink Saree 🌸" },
+  { src: "Images/pookie.png", title: "Pookie Headband 🎀" },
+  { src: "Images/puppy face.png", title: "Puppy Face 🥹" },
+  { src: "Images/shinchan on video call.png", title: "Video Call With Shinchan 📱" },
+  { src: "Images/sleepinh.png", title: "Sleeping Cute 😴" }
+];
+
+let currentIndex = 0;
+
+const popup = document.getElementById("popup");
+const img = document.getElementById("carouselImage");
+const title = document.getElementById("carouselTitle");
+
+function showMemory(index){
+  img.src = memories[index].src;
+  title.textContent = memories[index].title;
+}
+
+memoriesBtn.onclick = () => {
+  popup.style.display = "flex";
+  showMemory(currentIndex);
+};
+
+document.getElementById("nextBtn").onclick = () => {
+  currentIndex = (currentIndex + 1) % memories.length;
+  showMemory(currentIndex);
+};
+
+document.getElementById("prevBtn").onclick = () => {
+  currentIndex = (currentIndex - 1 + memories.length) % memories.length;
+  showMemory(currentIndex);
+};
+
+closePopup.onclick = () => popup.style.display = "none";
+
+</script>
+
+</body>
+</html>
