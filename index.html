@@ -275,12 +275,56 @@ body{
 .carouselButtons button:hover{
   transform:scale(1.1);
 }
+#preloader{
+  position:fixed;
+  inset:0;
+  background:#f7e7e9;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:10000;
+}
+
+.loaderContent{
+  text-align:center;
+}
+
+.loaderContent h1{
+  font-family:'Great Vibes',cursive;
+  font-size:40px;
+  color:#e60073;
+}
+
+.progressBar{
+  width:300px;
+  height:8px;
+  background:#ffd1ec;
+  border-radius:10px;
+  margin-top:20px;
+  overflow:hidden;
+}
+
+#progress{
+  height:100%;
+  width:0%;
+  background:#ff4da6;
+  transition:0.3s;
+}
 
 
 </style>
 </head>
 
 <body>
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="loaderContent">
+    <h1>Loading Love ❤️</h1>
+    <div class="progressBar">
+      <div id="progress"></div>
+    </div>
+  </div>
+</div>
 
 <!-- HERO -->
 <div class="hero" id="hero">
@@ -322,12 +366,69 @@ body{
 
 </div>
 
-
-<audio id="music" loop>
-<source src="./Feel-My-Love.mp3">
+<audio id="music" loop preload="auto">
+  <source src="./Feel-My-Love.mp3" type="audio/mpeg">
 </audio>
 
+
 <script>
+/* ================= PRELOAD IMAGES + AUDIO ================= */
+
+const assetsToLoad = [
+  "./Feel-My-Love.mp3",
+  "./7410332f759b2df41207f769e1e59dea.jpg",
+
+  "./Images/crying.png",
+  "./Images/feeding.png",
+  "./Images/hair adjustment.png",
+  "./Images/hearing.png",
+  "./Images/heart image.png",
+  "./Images/heart on cheek.png",
+  "./Images/hip dance.png",
+  "./Images/hot.png",
+  "./Images/looking.png",
+  "./Images/mirror selfie.png",
+  "./Images/nail polish.png",
+  "./Images/pink saree.png",
+  "./Images/pookie.png",
+  "./Images/puppy face.png",
+  "./Images/shinchan on video call.png",
+  "./Images/sleepinh.png"
+];
+
+let loadedAssets = 0;
+const totalAssets = assetsToLoad.length;
+const progressBar = document.getElementById("progress");
+const preloader = document.getElementById("preloader");
+
+assetsToLoad.forEach(src => {
+
+  let element;
+
+  if (src.endsWith(".mp3")) {
+    element = new Audio();
+    element.src = src;
+    element.oncanplaythrough = assetLoaded;
+  } else {
+    element = new Image();
+    element.src = src;
+    element.onload = assetLoaded;
+    element.onerror = assetLoaded; // avoid stuck loading
+  }
+
+});
+
+function assetLoaded() {
+  loadedAssets++;
+  let percent = (loadedAssets / totalAssets) * 100;
+  progressBar.style.width = percent + "%";
+
+  if (loadedAssets === totalAssets) {
+    setTimeout(() => {
+      preloader.style.display = "none";
+    }, 800);
+  }
+}
 
 /* Sparkle Cursor */
 document.addEventListener("mousemove",e=>{
